@@ -140,20 +140,9 @@ else {
 
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
 * Prefer using auto-synthesis. But if necessary, `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
-* Colon-aligning method invocation should often be avoided.  There are cases where a method signature may have >= 3 colons and colon-aligning makes the code more readable. Please do **NOT** however colon align methods containing blocks because Xcode's indenting makes it illegible.
+* Colon-aligning method invocation should be used.
 
 **Preferred:**
-
-```objc
-// blocks are easily readable
-[UIView animateWithDuration:1.0 animations:^{
-  // something
-} completion:^(BOOL finished) {
-  // something
-}];
-```
-
-**Not Preferred:**
 
 ```objc
 // colon-aligning makes the block indentation hard to read
@@ -166,9 +155,20 @@ else {
                  }];
 ```
 
+**Not Preferred:**
+
+```objc
+// blocks are easily readable
+[UIView animateWithDuration:1.0 animations:^{
+  // something
+} completion:^(BOOL finished) {
+  // something
+}];
+```
+
 ## Comments
 
-When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.
+When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted. Also leave your name next to the comment, so it is known who is the original writer of a note.
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. *Exception: This does not apply to those comments used to generate documentation.*
 
