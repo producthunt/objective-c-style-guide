@@ -1,6 +1,6 @@
 # The official raywenderlich.com Objective-C style guide.
 
-This style guide outlines the coding conventions for raywenderlich.com.
+This style guide outlines the coding conventions for [Product Hunt](producthunt.com). It is based on the [style guide](http://www.raywenderlich.com/62570/objective-c-style-guide) for raywenderlich.com.
 
 ## Introduction
 
@@ -140,20 +140,9 @@ else {
 
 * There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
 * Prefer using auto-synthesis. But if necessary, `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
-* Colon-aligning method invocation should often be avoided.  There are cases where a method signature may have >= 3 colons and colon-aligning makes the code more readable. Please do **NOT** however colon align methods containing blocks because Xcode's indenting makes it illegible.
+* Colon-aligning method invocation should be used.
 
 **Preferred:**
-
-```objc
-// blocks are easily readable
-[UIView animateWithDuration:1.0 animations:^{
-  // something
-} completion:^(BOOL finished) {
-  // something
-}];
-```
-
-**Not Preferred:**
 
 ```objc
 // colon-aligning makes the block indentation hard to read
@@ -166,11 +155,26 @@ else {
                  }];
 ```
 
+**Not Preferred:**
+
+```objc
+// blocks are easily readable
+[UIView animateWithDuration:1.0 animations:^{
+  // something
+} completion:^(BOOL finished) {
+  // something
+}];
+```
+
 ## Comments
 
-When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.
+When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted. Also leave your name next to the comment, so it is known who is the original writer of a note.
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. *Exception: This does not apply to those comments used to generate documentation.*
+
+```objc
+// Note(rstankov): This is preferable comment note
+```
 
 ## Naming
 
@@ -211,7 +215,7 @@ Properties should be camel-case with the leading word being lowercase. Use auto-
 **Preferred:**
 
 ```objc
-@property (strong, nonatomic) NSString *descriptiveVariableName;
+@property (nonatomic, strong) NSString *descriptiveVariableName;
 ```
 
 **Not Preferred:**
@@ -267,7 +271,7 @@ Direct access to instance variables that 'back' properties should be avoided exc
 ```objc
 @interface RWTTutorial : NSObject
 
-@property (strong, nonatomic) NSString *tutorialName;
+@property (nonatomic, strong) NSString *tutorialName;
 
 @end
 ```
@@ -283,35 +287,36 @@ Direct access to instance variables that 'back' properties should be avoided exc
 
 ## Property Attributes
 
-Property attributes should be explicitly listed, and will help new programmers when reading the code.  The order of properties should be storage then atomicity, which is consistent with automatically generated code when connecting UI elements from Interface Builder.
+Property attributes should be explicitly listed, and will help new programmers when reading the code.
 
 **Preferred:**
-
-```objc
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (strong, nonatomic) NSString *tutorialName;
-```
-
-**Not Preferred:**
 
 ```objc
 @property (nonatomic, weak) IBOutlet UIView *containerView;
-@property (nonatomic) NSString *tutorialName;
-```
-
-Properties with mutable counterparts (e.g. NSString) should prefer `copy` instead of `strong`. 
-Why? Even if you declared a property as `NSString` somebody might pass in an instance of an `NSMutableString` and then change it without you noticing that.  
-
-**Preferred:**
-
-```objc
-@property (copy, nonatomic) NSString *tutorialName;
+@property (nonatomic, strong) NSString *tutorialName;
 ```
 
 **Not Preferred:**
 
 ```objc
+@property (weak nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSString *tutorialName;
+@property (nonatomic) NSString *tutorialName;
+```
+
+Properties with mutable counterparts (e.g. NSString) should prefer `copy` instead of `strong`.
+Why? Even if you declared a property as `NSString` somebody might pass in an instance of an `NSMutableString` and then change it without you noticing that.
+
+**Preferred:**
+
+```objc
+@property (nonatomic, copy) NSString *tutorialName;
+```
+
+**Not Preferred:**
+
+```objc
+@property (nonatomic, strong) NSString *tutorialName;
 ```
 
 ## Dot-Notation Syntax
@@ -482,16 +487,16 @@ Private properties should be declared in class extensions (anonymous categories)
 ```objc
 @interface RWTDetailViewController ()
 
-@property (strong, nonatomic) GADBannerView *googleAdView;
-@property (strong, nonatomic) ADBannerView *iAdView;
-@property (strong, nonatomic) UIWebView *adXWebView;
+@property (nonatomic, strong) GADBannerView *googleAdView;
+@property (nonatomic, strong) ADBannerView *iAdView;
+@property (nonatomic, strong) UIWebView *adXWebView;
 
 @end
 ```
 
 ## Booleans
 
-Objective-C uses `YES` and `NO`.  Therefore `true` and `false` should only be used for CoreFoundation, C or C++ code.  Since `nil` resolves to `NO` it is unnecessary to compare it in conditions. Never compare something directly to `YES`, because `YES` is defined to 1 and a `BOOL` can be up to 8 bits.
+Use `true` and `false` over `YES` and `NO`.
 
 This allows for more consistency across files and greater visual clarity.
 
@@ -552,7 +557,7 @@ Non-boolean variables should be compared against something, and parentheses are 
 NSInteger value = 5;
 result = (value != 0) ? x : y;
 
-BOOL isHorizontal = YES;
+BOOL isHorizontal = true;
 result = isHorizontal ? x : y;
 ```
 
@@ -692,30 +697,21 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 Line breaks are an important topic since this style guide is focused for print and online readability.
 
 For example:
+
+**Preferred:**
+
 ```objc
 self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
 ```
-A long line of code like this should be carried on to the second line adhering to this style guide's Spacing section (two spaces).
-```objc
-self.productsRequest = [[SKProductsRequest alloc] 
-  initWithProductIdentifiers:productIdentifiers];
-```
 
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the raywenderlich.com site!  It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic.  The end square bracket is used because it represents the largest smile able to be captured using ascii art.  A half-hearted smile is represented if an end parenthesis is used, and thus not preferred.
-
-**Preferred:**
-```objc
-:]
-```
+Splitting an line like this into several parts makes reading it harder.
 
 **Not Preferred:**
-```objc
-:)
-```  
 
+```objc
+self.productsRequest = [[SKProductsRequest alloc]
+  initWithProductIdentifiers:productIdentifiers];
+```
 
 ## Xcode project
 
