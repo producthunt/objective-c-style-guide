@@ -1,6 +1,6 @@
 # The official raywenderlich.com Objective-C style guide.
 
-This style guide outlines the coding conventions for raywenderlich.com.
+This style guide outlines the coding conventions for [Product Hunt](producthunt.com). It is based on the [style guide](http://www.raywenderlich.com/62570/objective-c-style-guide) for raywenderlich.com.
 
 ## Introduction
 
