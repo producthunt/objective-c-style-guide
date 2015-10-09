@@ -224,6 +224,20 @@ Properties should be camel-case with the leading word being lowercase. Use auto-
 id varnm;
 ```
 
+Name accessibility label constants with `kAX` prefix to allow auto-complete to properly suggest all available constants withing the scope.
+
+**Preferred**
+
+```objc
+static NSString *const kAXSomeElementLabel = @"Some Element";
+```
+
+**Not Preferred**
+
+```objc
+static NSString *const kSomeElementLabel = @"Some Element";
+```
+
 ### Underscores
 
 When using properties, instance variables should always be accessed and mutated using `self.`. This means that all properties will be visually distinct, as they will all be prefaced with `self.`. 
